@@ -1,12 +1,21 @@
 #include "renga_loader.hpp"
 #include "Renga\CreateApplication.hpp"
 
+#include "shellwindow.h"
+#include <QApplication>
+
 class py_open_form :public Renga::ActionEventHandler {
 public:
     py_open_form(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
     void OnTriggered() override
     {
-        //QT form load
+        QCoreApplication::addLibraryPath("C:/Qt/6.3.2/msvc2019_64/plugins");
+        int argc = 1;
+        char* args[] = { (char*)"RengaPythonShell" };
+        QApplication a(argc, args);
+        ShellWindow w;
+        w.show();
+        a.exec();
     }
     void OnToggled(bool checked) override {}
 
@@ -48,7 +57,7 @@ bool Renga_loader::initialize(const wchar_t* pluginPath)
         //Исполнение из QT формы
         Renga::IActionPtr button_py_execute = renga_ui->CreateAction();
         EditAction(pluginPath, button_py_execute, L"\\py_logo.png", "Запустить основное окно");
-        button_py_execute->DisplayName = "Открыть редактор Python";
+        button_py_execute->DisplayName = "Run Python shell";
         this->addHandler(new py_open_form(button_py_execute));
         down_button->AddAction(button_py_execute);
 

@@ -1,11 +1,18 @@
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
+#undef B0
+
 #include "shellwindow.h"
 #include "ui_shellwindow.h"
+
+
 
 ShellWindow::ShellWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ShellWindow)
 {
     ui->setupUi(this);
+    //Проверить Python
 }
 
 ShellWindow::~ShellWindow()
@@ -16,7 +23,7 @@ ShellWindow::~ShellWindow()
 
 void ShellWindow::on_action_load_from_file_clicked()
 {
-
+ //load script from file
 }
 
 
