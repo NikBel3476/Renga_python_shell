@@ -20,14 +20,26 @@ before_build.commands = chcp 1251
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+# check if debug or release
+CONFIG(debug, debug|release) {
+  DEBUG_EXT = _d
+} else {
+  DEBUG_EXT =
+}
+PYTHON_PATH = C:/Users/Georg/AppData/Local/Programs/Python/Python310/
+PYTHON_LIB =  C:/Users/Georg/AppData/Local/Programs/Python/Python310/libs/
+RENGA_SDK = E:/30_Coding/SDK/RengaSDK/
+
+win32:INCLUDEPATH += $${PYTHON_PATH}/include
+win32:LIBS += $${PYTHON_LIB}/python310$${DEBUG_EXT}.lib
+
 SOURCES += \
     renga_loader.cpp \
     shellwindow.cpp
 
 INCLUDEPATH += \
-    "E:/30_Coding/SDK/RengaSDK/Cpp/Include" \
-    "E:/30_Coding/SDK/RengaSDK/tlb" \
-    "C:/Users/Georg/AppData/Local/Programs/Python/Python310/Include"
+    $$RENGA_SDK/Cpp/Include \
+    $$RENGA_SDK/tlb \
 
 HEADERS += \
     renga_loader.hpp \
@@ -35,8 +47,6 @@ HEADERS += \
 
 FORMS += \
     shellwindow.ui
-
-LIBS += -L"C:/Users/Georg/AppData/Local/Programs/Python/Python310/libs/python310.lib"
 
 
 # Default rules for deployment.
