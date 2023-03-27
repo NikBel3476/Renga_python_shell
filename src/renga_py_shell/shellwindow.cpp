@@ -13,6 +13,8 @@ ShellWindow::ShellWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //Проверить Python
+    Py_Initialize();
+
 }
 
 ShellWindow::~ShellWindow()
@@ -42,5 +44,26 @@ void ShellWindow::on_code_space_textChanged()
 void ShellWindow::on_pushButton_clicked()
 {
     //save to file
+}
+
+
+void ShellWindow::on_command_run_script_clicked()
+{
+    //execute scipt in code_space
+    QString code_as_text = this->ui->code_space->toPlainText();
+
+    char* argv[] = { (char*)"RengaPythonShell" };
+    wchar_t *program = Py_DecodeLocale(argv[0], NULL);
+       if (program == NULL) {
+           fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
+           exit(1);
+       }
+       Py_SetProgramName(program);  /* optional but recommended */
+    Py_Initialize();
+       PyRun_SimpleString(code_as_text.toStdString().c_str());
+       if (Py_FinalizeEx() < 0) {
+           exit(120);
+       }
+       PyMem_RawFree(program);
 }
 

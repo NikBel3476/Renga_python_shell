@@ -60,3 +60,6 @@ DISTFILES += \
     repa_logo.png \
     ui_form_run_script.png \
     rengacomapi.tlh
+
+RESOURCES += \
+    qt_resources_data.qrc

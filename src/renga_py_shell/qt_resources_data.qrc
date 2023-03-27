@@ -1,5 +1,5 @@
 <!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC version="1.0">
 <qresource>
     <file>icons/py_logo.png</file>
 </qresource>
@@ -9,3 +9,4 @@
 <qresource>
     <file>icons/ui_form_run_script.png</file>
 </qresource>
+</RCC>

@@ -24,6 +24,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_command_run_script_clicked();
+
 private:
     Ui::ShellWindow *ui;
 };

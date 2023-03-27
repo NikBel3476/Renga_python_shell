@@ -53,6 +53,9 @@
       <height>341</height>
      </rect>
     </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhLatinOnly|Qt::ImhMultiLine</set>
+    </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
@@ -116,8 +119,8 @@
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>ui_form_run_script.png</normaloff>ui_form_run_script.png</iconset>
+     <iconset resource="qt_resources_data.qrc">
+      <normaloff>:/icons/ui_form_run_script.png</normaloff>:/icons/ui_form_run_script.png</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -197,6 +200,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="qt_resources_data.qrc"/>
+ </resources>
  <connections/>
 </ui>
