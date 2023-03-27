@@ -15,6 +15,15 @@ public:
     ShellWindow(QWidget *parent = nullptr);
     ~ShellWindow();
 
+private slots:
+    void on_action_load_from_file_clicked();
+
+    void on_output_space_textChanged();
+
+    void on_code_space_textChanged();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::ShellWindow *ui;
 };
