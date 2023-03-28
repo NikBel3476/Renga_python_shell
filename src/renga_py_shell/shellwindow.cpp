@@ -69,6 +69,11 @@ void ShellWindow::on_command_run_script_clicked()
        PyMem_RawFree(program);
 }
 
+void ShellWindow::on_command_run_script_triggered(QAction *arg1)
+{
+    //same as clicked
+        this->ShellWindow::on_command_run_script_clicked();
+}
 
 void ShellWindow::on_action_3_triggered()
 {
@@ -139,4 +144,7 @@ void ShellWindow::on_action_Python_2_triggered()
     }
     file.close();
 }
+
+
+
 
