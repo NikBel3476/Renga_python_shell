@@ -1,0 +1,8 @@
+cd /d C:\Qt\6.3.2\msvc2019_64\bin\
+
+
+//Debug
+windeployqt --debug C:\Users\Georg\Documents\GitHub\Renga_python_shell\src\bin_debug\debug\renga_py_shell.dll
+
+//Release
+windeployqt --release C:\Users\Georg\Documents\GitHub\Renga_python_shell\src\bin_release\release\renga_py_shell.dll
