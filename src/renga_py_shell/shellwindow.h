@@ -26,6 +26,20 @@ private slots:
 
     void on_command_run_script_clicked();
 
+    void on_action_3_triggered();
+
+    void on_action_5_triggered();
+
+    void on_action_4_triggered();
+
+    void on_action_6_triggered();
+
+    void on_action_triggered();
+
+    void on_action_Python_triggered();
+
+    void on_action_Python_2_triggered();
+
 private:
     Ui::ShellWindow *ui;
 };

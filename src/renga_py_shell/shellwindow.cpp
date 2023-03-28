@@ -4,6 +4,8 @@
 
 #include "shellwindow.h"
 #include "ui_shellwindow.h"
+#include <QDesktopServices>
+#include <QFileDialog>
 
 
 
@@ -65,5 +67,76 @@ void ShellWindow::on_command_run_script_clicked()
            exit(120);
        }
        PyMem_RawFree(program);
+}
+
+
+void ShellWindow::on_action_3_triggered()
+{
+    //перемещение в репозиторий с программой
+    QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell", QUrl::TolerantMode));
+}
+
+
+void ShellWindow::on_action_5_triggered()
+{
+    //= запуск кода
+    this->ShellWindow::on_command_run_script_clicked();
+}
+
+
+void ShellWindow::on_action_4_triggered()
+{
+    //перемещение в ReadMe
+    QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell/blob/main/README.md", QUrl::TolerantMode));
+}
+
+
+void ShellWindow::on_action_6_triggered()
+{
+    //перемещение в Issues
+    QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell/issues", QUrl::TolerantMode));
+}
+
+
+void ShellWindow::on_action_triggered()
+{
+    //close form
+    this->close();
+}
+
+
+void ShellWindow::on_action_Python_triggered()
+{
+    //open py script and loading them in code_space
+    QString file1Name = QFileDialog::getOpenFileName(this,
+             tr("Open Python-script"), "", tr("Python-scripts (*.py)"));
+    QFile inputFile(file1Name);
+    this->ui->code_space->insertPlainText("");
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd())
+       {
+          QString line = in.readLine();
+          this->ui->code_space->appendPlainText(line);
+       }
+       inputFile.close();
+    }
+}
+
+
+void ShellWindow::on_action_Python_2_triggered()
+{
+    //save inner of code_space to file
+    QString code_string = this->ui->code_space->toPlainText();
+    QString save_filename = QFileDialog::getSaveFileName(this,tr("Save Python scripts"), "",
+        tr("Python-scripts (*.py)"));
+
+    QFile file(save_filename);
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+        stream << code_string;
+    }
+    file.close();
 }
 
