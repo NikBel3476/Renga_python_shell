@@ -40,6 +40,7 @@ void ShellWindow::on_output_space_textChanged()
 void ShellWindow::on_code_space_textChanged()
 {
     //save result to temp file
+
 }
 
 
@@ -67,12 +68,6 @@ void ShellWindow::on_command_run_script_clicked()
            exit(120);
        }
        PyMem_RawFree(program);
-}
-
-void ShellWindow::on_command_run_script_triggered(QAction *arg1)
-{
-    //same as clicked
-        this->ShellWindow::on_command_run_script_clicked();
 }
 
 void ShellWindow::on_action_3_triggered()
@@ -123,7 +118,7 @@ void ShellWindow::on_action_Python_triggered()
        while (!in.atEnd())
        {
           QString line = in.readLine();
-          this->ui->code_space->appendPlainText(line);
+           this->ui->code_space->append(line);
        }
        inputFile.close();
     }
@@ -146,5 +141,8 @@ void ShellWindow::on_action_Python_2_triggered()
 }
 
 
-
+void ShellWindow::on_command_run_script_triggered(QAction *arg1)
+{
+    this->on_command_run_script_clicked();
+}
 

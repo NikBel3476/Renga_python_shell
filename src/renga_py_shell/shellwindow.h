@@ -40,6 +40,8 @@ private slots:
 
     void on_action_Python_2_triggered();
 
+    void on_command_run_script_triggered(QAction *arg1);
+
 private:
     Ui::ShellWindow *ui;
 };

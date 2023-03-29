@@ -18,7 +18,7 @@
     <normaloff>repa_logo.png</normaloff>repa_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="code_space">
+   <widget class="QTextEdit" name="code_space">
     <property name="geometry">
      <rect>
       <x>10</x>
