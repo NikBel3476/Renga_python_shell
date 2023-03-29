@@ -34,6 +34,7 @@ win32:INCLUDEPATH += $${PYTHON_PATH}/include
 win32:LIBS += $${PYTHON_LIB}/python310$${DEBUG_EXT}.lib
 
 SOURCES += \
+    python_code_editor.cpp \
     renga_loader.cpp \
     shellwindow.cpp
 
@@ -42,6 +43,7 @@ INCLUDEPATH += \
     $$RENGA_SDK/tlb \
 
 HEADERS += \
+    python_code_editor.hpp \
     renga_loader.hpp \
     shellwindow.h
 

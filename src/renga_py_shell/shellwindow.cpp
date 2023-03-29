@@ -6,16 +6,34 @@
 #include "ui_shellwindow.h"
 #include <QDesktopServices>
 #include <QFileDialog>
-
+#include <QStyle>
+#include "python_code_editor.hpp"
 
 
 ShellWindow::ShellWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::ShellWindow)
+    : QMainWindow(parent), ui(new Ui::ShellWindow)
 {
     ui->setupUi(this);
+    this->py_editor = new python_code_editor(this);
+    //QRect* reqt = new QRect(10, 40, 861, 341);
+    py_editor->setGeometry(40, 60, 861, 321);
+
     //Проверить Python
     Py_Initialize();
+
+    QFile inputFile("E:\\Temp\\py_test2.py");
+    this->py_editor->insertPlainText("");
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            this->py_editor->appendPlainText(line);
+        }
+        inputFile.close();
+    }
+
 
 }
 
@@ -40,7 +58,9 @@ void ShellWindow::on_output_space_textChanged()
 void ShellWindow::on_code_space_textChanged()
 {
     //save result to temp file
-
+    //https://evileg.com/en/post/437/
+    //colorzedata
+    // We load the text for search in syntax highlighting
 }
 
 
@@ -111,14 +131,14 @@ void ShellWindow::on_action_Python_triggered()
     QString file1Name = QFileDialog::getOpenFileName(this,
              tr("Open Python-script"), "", tr("Python-scripts (*.py)"));
     QFile inputFile(file1Name);
-    this->ui->code_space->insertPlainText("");
+    this->py_editor->insertPlainText("");
     if (inputFile.open(QIODevice::ReadOnly))
     {
        QTextStream in(&inputFile);
        while (!in.atEnd())
        {
           QString line = in.readLine();
-           this->ui->code_space->append(line);
+            this->py_editor->appendPlainText(line);
        }
        inputFile.close();
     }
@@ -128,7 +148,7 @@ void ShellWindow::on_action_Python_triggered()
 void ShellWindow::on_action_Python_2_triggered()
 {
     //save inner of code_space to file
-    QString code_string = this->ui->code_space->toPlainText();
+    QString code_string = this->py_editor->toPlainText();
     QString save_filename = QFileDialog::getSaveFileName(this,tr("Save Python scripts"), "",
         tr("Python-scripts (*.py)"));
 

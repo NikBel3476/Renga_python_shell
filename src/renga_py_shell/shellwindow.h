@@ -2,7 +2,7 @@
 #define SHELLWINDOW_H
 
 #include <QMainWindow>
-
+#include "python_code_editor.hpp"
 QT_BEGIN_NAMESPACE
 namespace Ui { class ShellWindow; }
 QT_END_NAMESPACE
@@ -44,5 +44,7 @@ private slots:
 
 private:
     Ui::ShellWindow *ui;
+    python_code_editor* py_editor;
+    // Inherited class for creating syntax highlighting logic
 };
 #endif // SHELLWINDOW_H
