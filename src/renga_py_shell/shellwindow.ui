@@ -14,23 +14,10 @@
    <string>Renga Python Shell</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>repa_logo.png</normaloff>repa_logo.png</iconset>
+   <iconset resource="qt_resources_data.qrc">
+    <normaloff>:/icons/repa_logo.png</normaloff>:/icons/repa_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="code_space">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>861</width>
-      <height>321</height>
-     </rect>
-    </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhMultiLine</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>

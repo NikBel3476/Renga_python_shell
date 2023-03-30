@@ -10,7 +10,7 @@ python_code_editor::python_code_editor(QWidget *parent) : QPlainTextEdit(parent)
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
-    updateLineNumberAreaWidth(0);
+    updateLineNumberAreaWidth(15);
     highlightCurrentLine();
 }
 
