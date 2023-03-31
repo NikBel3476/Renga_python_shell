@@ -1,13 +1,9 @@
-#define PY_SSIZE_T_CLEAN
-#include <Python.h>
-#undef B0
-
 #include "shellwindow.h"
-#include "ui_shellwindow.h"
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QStyle>
-#include "python_code_editor.hpp"
+#include "ui_shellwindow.h"
+#include "python_code_handler.hpp"
 
 
 ShellWindow::ShellWindow(QWidget *parent)
@@ -17,9 +13,6 @@ ShellWindow::ShellWindow(QWidget *parent)
     this->py_editor = new python_code_editor(this);
     //QRect* reqt = new QRect(10, 40, 861, 341);
     py_editor->setGeometry(10, 60, 861, 340);
-
-    //Проверить Python
-    Py_Initialize();
 
     QFile inputFile("E:\\Temp\\py_test2.py");
     this->py_editor->insertPlainText("");
@@ -74,20 +67,7 @@ void ShellWindow::on_command_run_script_clicked()
 {
     //execute scipt in code_space
     QString code_as_text = this->py_editor->toPlainText();
-
-    char* argv[] = { (char*)"RengaPythonShell" };
-    wchar_t *program = Py_DecodeLocale(argv[0], NULL);
-       if (program == NULL) {
-           fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
-           exit(1);
-       }
-       Py_SetProgramName(program);  /* optional but recommended */
-    Py_Initialize();
-       PyRun_SimpleString(code_as_text.toStdString().c_str());
-       if (Py_FinalizeEx() < 0) {
-           exit(120);
-       }
-       PyMem_RawFree(program);
+    python_run_code(&code_as_text);
 }
 
 void ShellWindow::on_action_3_triggered()

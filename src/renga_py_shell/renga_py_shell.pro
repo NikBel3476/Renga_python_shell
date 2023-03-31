@@ -35,6 +35,7 @@ win32:LIBS += $${PYTHON_LIB}/python310$${DEBUG_EXT}.lib
 
 SOURCES += \
     python_code_editor.cpp \
+    python_code_handler.cpp \
     renga_loader.cpp \
     shellwindow.cpp
 
@@ -44,6 +45,7 @@ INCLUDEPATH += \
 
 HEADERS += \
     python_code_editor.hpp \
+    python_code_handler.hpp \
     renga_loader.hpp \
     shellwindow.h
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "python_code_editor.hpp"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class ShellWindow; }
 QT_END_NAMESPACE
