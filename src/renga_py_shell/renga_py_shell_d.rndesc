@@ -1,5 +1,5 @@
 <RengaPlugin>
-   <Name>Renga Python Shell</Name>                       <!-- Displayed plugin name -->
+   <Name>🐍Renga Python Shell</Name>                       <!-- Displayed plugin name -->
    <Version>1.0</Version>                           <!-- Plugin version -->
    <Copyright>GeorgGrebenyuk</Copyright>            <!-- Copyright information -->
    <RequiredAPIVersion>2.17</RequiredAPIVersion>     <!-- Minimum required version of Renga API -->
