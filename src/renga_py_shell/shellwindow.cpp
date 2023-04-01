@@ -14,7 +14,7 @@ ShellWindow::ShellWindow(QWidget *parent)
     //QRect* reqt = new QRect(10, 40, 861, 341);
     py_editor->setGeometry(10, 60, 861, 340);
 
-    QFile inputFile("E:\\Temp\\py_test2.py");
+    QFile inputFile("E:\\Temp\\test_1.py");
     this->py_editor->insertPlainText("");
     if (inputFile.open(QIODevice::ReadOnly))
     {
@@ -67,7 +67,7 @@ void ShellWindow::on_command_run_script_clicked()
 {
     //execute scipt in code_space
     QString code_as_text = this->py_editor->toPlainText();
-    python_run_code(&code_as_text);
+    python_run_code(&code_as_text, this->ui->output_space);
 }
 
 void ShellWindow::on_action_3_triggered()

@@ -30,8 +30,7 @@ PYTHON_PATH = C:/Users/Georg/AppData/Local/Programs/Python/Python310/
 PYTHON_LIB =  C:/Users/Georg/AppData/Local/Programs/Python/Python310/libs/
 RENGA_SDK = E:/30_Coding/SDK/RengaSDK/
 
-win32:INCLUDEPATH += $${PYTHON_PATH}/include
-win32:LIBS += $${PYTHON_LIB}/python310$${DEBUG_EXT}.lib
+LIBS += $${PYTHON_LIB}/python310$${DEBUG_EXT}.lib
 
 SOURCES += \
     python_code_editor.cpp \
@@ -42,6 +41,7 @@ SOURCES += \
 INCLUDEPATH += \
     $$RENGA_SDK/Cpp/Include \
     $$RENGA_SDK/tlb \
+    $${PYTHON_PATH}/include
 
 HEADERS += \
     python_code_editor.hpp \

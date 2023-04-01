@@ -1,4 +1,3 @@
-
 #ifndef PYTHON_CODE_EDITOR_HPP
 #define PYTHON_CODE_EDITOR_HPP
 
