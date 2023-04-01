@@ -3,13 +3,14 @@
 
 #include "shellwindow.h"
 #include <QApplication>
+#include <QString>
 
 class py_open_form :public Renga::ActionEventHandler {
 public:
     py_open_form(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
     void OnTriggered() override
     {
-        QCoreApplication::addLibraryPath("C:/Qt/6.3.2/msvc2019_64/plugins");
+
         int argc = 1;
         char* args[] = { (char*)"RengaPythonShell" };
         QApplication a(argc, args);
@@ -40,8 +41,9 @@ bool Renga_loader::initialize(const wchar_t* pluginPath)
     auto renga_app = Renga::CreateApplication();
     if (renga_app)
     {
-        //Check python env
-        if (PyInitialize() == false) return false;
+        //Загрузка библиотеки QT6 для плагина
+        QString cur_dir = QString::fromStdWString(pluginPath);
+        QApplication::addLibraryPath(cur_dir);
 
         Renga::IUIPtr renga_ui = renga_app->GetUI();
         Renga::IUIPanelExtensionPtr panel = renga_ui->CreateUIPanelExtension();

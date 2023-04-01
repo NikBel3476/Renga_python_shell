@@ -20,11 +20,13 @@ before_build.commands = chcp 1251
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-# check if debug or release
+# Установка формата библиотеки для Python
 CONFIG(debug, debug|release) {
   DEBUG_EXT = _d
+  DESTDIR = $$OUT_PWD/debug
 } else {
   DEBUG_EXT =
+  DESTDIR = $$OUT_PWD/release
 }
 PYTHON_PATH = C:/Users/Georg/AppData/Local/Programs/Python/Python310/
 PYTHON_LIB =  C:/Users/Georg/AppData/Local/Programs/Python/Python310/libs/
@@ -61,9 +63,20 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     py_logo.png \
     renga_py_shell.rndesc \
+    renga_py_shell_d.rndesc \
     repa_logo.png \
     ui_form_run_script.png \
     rengacomapi.tlh
 
 RESOURCES += \
     qt_resources_data.qrc
+
+#События после сборки
+copy_to_build.path = $$DESTDIR
+copy_to_build.files = icons/*
+copy_to_build2.path = $$DESTDIR
+copy_to_build2.files = renga_py_shell.rndesc
+
+INSTALLS += \
+    copy_to_build \
+    copy_to_build2

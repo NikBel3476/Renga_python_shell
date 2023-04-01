@@ -3,6 +3,6 @@
    <Version>1.0</Version>                           <!-- Plugin version -->
    <Copyright>GeorgGrebenyuk</Copyright>            <!-- Copyright information -->
    <RequiredAPIVersion>2.17</RequiredAPIVersion>     <!-- Minimum required version of Renga API -->
-   <PluginFilename>renga_py_shell.dll</PluginFilename>      <!-- Path to the plugin's binary file, either relative to the folder containing the .rndesc file or an absolute one -->
+   <PluginFilename>C:\Users\Georg\Documents\GitHub\Renga_python_shell\src\bin_debug\debug\renga_py_shell.dll</PluginFilename>      <!-- Path to the plugin's binary file, either relative to the folder containing the .rndesc file or an absolute one -->
    <Vendor>-</Vendor>                           <!-- Vendor of the plugin -->
 </RengaPlugin>
