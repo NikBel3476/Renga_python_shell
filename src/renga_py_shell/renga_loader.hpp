@@ -1,7 +1,7 @@
 #ifndef RENGA_LOADER_HPP
 #define RENGA_LOADER_HPP
 
-#include "rengacomapi.tlh"
+#import "RengaCOMAPI.tlb"
 
 #include "Renga/CreateApplication.hpp"
 #include "Renga/IPlugin.h"

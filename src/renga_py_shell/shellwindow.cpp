@@ -14,6 +14,7 @@ ShellWindow::ShellWindow(QWidget *parent)
     //QRect* reqt = new QRect(10, 40, 861, 341);
     py_editor->setGeometry(10, 60, 861, 340);
 
+    // FIXME: remove hardcoded path
     QFile inputFile("E:\\Temp\\test_1.py");
     this->py_editor->insertPlainText("");
     if (inputFile.open(QIODevice::ReadOnly))
