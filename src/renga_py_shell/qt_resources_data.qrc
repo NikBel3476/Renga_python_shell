@@ -1,12 +1,8 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
-<qresource>
+<qresource prefix="/">
     <file>icons/py_logo.png</file>
-</qresource>
-<qresource>
     <file>icons/repa_logo.png</file>
-</qresource>
-<qresource>
     <file>icons/ui_form_run_script.png</file>
 </qresource>
 </RCC>

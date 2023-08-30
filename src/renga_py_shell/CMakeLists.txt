@@ -20,7 +20,7 @@ endif()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS
     Widgets
 )
-find_package(Qt6 REQUIRED COMPONENTS
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
     Widgets
 )
 find_package (Python COMPONENTS Interpreter Development)
@@ -34,8 +34,7 @@ if (NOT ${Python_INTERPRETER_ID} MATCHES "Python")
 endif()
 
 set(PROJECT_SOURCES
-    main.cpp
-    renga_loader.cpp
+    RengaPyShellPlugin.cpp
     shellwindow.cpp
     python_code_editor.cpp
     python_code_handler.cpp
@@ -58,19 +57,26 @@ endif()
 #    configure_file("${RESOURCE_FILE}" "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/${RESOURCE_FILE}")
 #endforeach()
 
-configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/renga_py_shell.rndesc)
-configure_file(icons/py_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/py_logo.png)
-configure_file(icons/repa_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/repa_logo.png)
-configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ui_form_run_script.png)
+if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
+    configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/renga_py_shell.rndesc)
+    configure_file(icons/py_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/py_logo.png)
+    configure_file(icons/repa_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/repa_logo.png)
+    configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ui_form_run_script.png)
+else()
+    configure_file(renga_py_shell.rndesc renga_py_shell.rndesc)
+    configure_file(icons/py_logo.png py_logo.png)
+    configure_file(icons/repa_logo.png repa_logo.png)
+    configure_file(icons/ui_form_run_script.png ui_form_run_script.png)
+endif()
 
-add_library(renga_py_shell SHARED
+add_library(${PROJECT_NAME} SHARED
     ${PROJECT_SOURCES}
 )
-target_link_libraries(renga_py_shell PRIVATE
+target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Python::Module
 )
-target_include_directories(renga_py_shell INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 include_directories(
     ${RENGA_SDK_PATH}/C++/Include
