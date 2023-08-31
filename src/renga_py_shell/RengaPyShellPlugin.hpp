@@ -3,19 +3,21 @@
 
 #import "RengaCOMAPI.tlb"
 
+#include <QApplication>
+#include <QString>
 #include <QObject>
 
 #include "Renga/CreateApplication.hpp"
 #include "Renga/IPlugin.h"
 #include "Renga/ActionEventHandler.hpp"
-
 #include "string"
 #include "memory"
 #include "list"
+#include "shellwindow.h"
 
 class RengaPyShellPlugin : public QObject, public plugins::IPlugin
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     RengaPyShellPlugin();

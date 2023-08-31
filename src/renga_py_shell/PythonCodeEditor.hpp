@@ -3,20 +3,18 @@
 
 #include <QPlainTextEdit>
 #include <QObject>
+#include <QtWidgets>
+#include <QWidget>
+#include <QSize>
+#include <QPaintEvent>
+#include <QResizeEvent>
 
-class QPaintEvent;
-class QResizeEvent;
-class QSize;
-class QWidget;
-
-class LineNumberArea;
-
-
-class python_code_editor: public QPlainTextEdit
+class PythonCodeEditor: public QPlainTextEdit
 {
      Q_OBJECT
+
 public:
-    explicit python_code_editor(QWidget *parent = 0);
+    explicit PythonCodeEditor(QWidget *parent = nullptr);
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
 
@@ -35,8 +33,10 @@ private:
 
 class LineNumberArea : public QWidget
 {
+    Q_OBJECT
+
 public:
-    LineNumberArea(python_code_editor *editor) : QWidget(editor) {
+    LineNumberArea(PythonCodeEditor *editor) : QWidget(editor) {
         codeEditor = editor;
     }
 
@@ -50,6 +50,6 @@ protected:
     }
 
 private:
-    python_code_editor *codeEditor;
+    PythonCodeEditor *codeEditor;
 };
 #endif // PYTHON_CODE_EDITOR_HPP

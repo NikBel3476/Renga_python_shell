@@ -1,10 +1,8 @@
-#include <QtWidgets>
-#include "python_code_editor.hpp"
+#include "PythonCodeEditor.hpp"
 
 
-python_code_editor::python_code_editor(QWidget *parent) : QPlainTextEdit(parent)
+PythonCodeEditor::PythonCodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
-
     lineNumberArea = new LineNumberArea(this);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
@@ -15,9 +13,7 @@ python_code_editor::python_code_editor(QWidget *parent) : QPlainTextEdit(parent)
     highlightCurrentLine();
 }
 
-
-
-int python_code_editor::lineNumberAreaWidth()
+int PythonCodeEditor::lineNumberAreaWidth()
 {
     int digits = 1;
     int max = qMax(1, blockCount());
@@ -31,16 +27,12 @@ int python_code_editor::lineNumberAreaWidth()
     return space;
 }
 
-
-
-void python_code_editor::updateLineNumberAreaWidth(int /* newBlockCount */)
+void PythonCodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
-
-
-void python_code_editor::updateLineNumberArea(const QRect &rect, int dy)
+void PythonCodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 {
     if (dy)
         lineNumberArea->scroll(0, dy);
@@ -51,9 +43,7 @@ void python_code_editor::updateLineNumberArea(const QRect &rect, int dy)
         updateLineNumberAreaWidth(0);
 }
 
-
-
-void python_code_editor::resizeEvent(QResizeEvent *e)
+void PythonCodeEditor::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
 
@@ -61,9 +51,7 @@ void python_code_editor::resizeEvent(QResizeEvent *e)
     lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
-
-
-void python_code_editor::highlightCurrentLine()
+void PythonCodeEditor::highlightCurrentLine()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
 
@@ -82,9 +70,7 @@ void python_code_editor::highlightCurrentLine()
     setExtraSelections(extraSelections);
 }
 
-
-
-void python_code_editor::lineNumberAreaPaintEvent(QPaintEvent *event)
+void PythonCodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
     QPainter painter(lineNumberArea);
     painter.fillRect(event->rect(), Qt::lightGray);

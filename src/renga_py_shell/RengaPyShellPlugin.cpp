@@ -1,13 +1,9 @@
 #include "RengaPyShellPlugin.hpp"
-#include "Renga/CreateApplication.hpp"
 
-#include "shellwindow.h"
-#include <QApplication>
-#include <QString>
 
-class py_open_form :public Renga::ActionEventHandler {
+class PyForm : public Renga::ActionEventHandler {
 public:
-    py_open_form(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
+    PyForm(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
 
     void OnTriggered() override
     {
@@ -19,7 +15,7 @@ public:
         window.setMinimumSize(800, 600);
 
         window.show();
-        app.exec();
+//        app.exec();
     }
 
     void OnToggled(bool checked) override {}
@@ -66,16 +62,16 @@ bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
     Renga::IDropDownButtonPtr down_button = renga_ui->CreateDropDownButton();
     Renga::IImagePtr icon = renga_ui->CreateImage();
     std::wstring plugin_dir(pluginPath);
-    icon->LoadFromFile((plugin_dir + L"\\repa_logo.png").c_str());
+    icon->LoadFromFile((plugin_dir + L":/icons/repa_logo.png").c_str());
     down_button->PutIcon(icon);
     down_button->ToolTip = "Запустить Renga Python Shell";
 
     //Создаем кнопки для Py-логики
     //Исполнение из QT формы
     Renga::IActionPtr button_py_execute = renga_ui->CreateAction();
-    EditAction(pluginPath, button_py_execute, L"\\py_logo.png", "Запустить основное окно");
+    EditAction(pluginPath, button_py_execute, L":/icons/py_logo.png", "Запустить основное окно");
     button_py_execute->DisplayName = "Run Python shell";
-    this->addHandler(new py_open_form(button_py_execute));
+    this->addHandler(new PyForm(button_py_execute));
     down_button->AddAction(button_py_execute);
 
     panel->AddDropDownButton(down_button);

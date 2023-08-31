@@ -10,7 +10,7 @@ ShellWindow::ShellWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::ShellWindow)
 {
     ui->setupUi(this);
-    this->py_editor = new python_code_editor(this);
+    this->py_editor = new PythonCodeEditor(this);
     //QRect* reqt = new QRect(10, 40, 861, 341);
     py_editor->setGeometry(10, 60, 861, 340);
 
