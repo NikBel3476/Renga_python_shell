@@ -58,7 +58,7 @@ endif()
 #endforeach()
 
 if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
-    configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/renga_py_shell.rndesc)
+    configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/renga_py_shell.rndesc)
     configure_file(icons/py_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/py_logo.png)
     configure_file(icons/repa_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/repa_logo.png)
     configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/ui_form_run_script.png)

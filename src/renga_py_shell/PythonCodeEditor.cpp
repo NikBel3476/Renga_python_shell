@@ -1,6 +1,5 @@
 #include "PythonCodeEditor.hpp"
 
-
 PythonCodeEditor::PythonCodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);

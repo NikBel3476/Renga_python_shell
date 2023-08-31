@@ -1,6 +1,5 @@
 #include "RengaPyShellPlugin.hpp"
 
-
 class PyForm : public Renga::ActionEventHandler {
 public:
     PyForm(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
@@ -15,7 +14,7 @@ public:
         window.setMinimumSize(800, 600);
 
         window.show();
-//        app.exec();
+        app.exec();
     }
 
     void OnToggled(bool checked) override {}
@@ -79,6 +78,7 @@ bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
 
     return true;
 }
+
 void RengaPyShellPlugin::stop() {
     this->m_handlerContainer.clear();
 }
