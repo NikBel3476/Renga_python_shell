@@ -1,24 +1,8 @@
-#include "RengaPyShellPlugin.hpp"
-
-class PyForm : public Renga::ActionEventHandler {
-public:
-    PyForm(Renga::IActionPtr action) : Renga::ActionEventHandler(action) {}
-
-    void OnTriggered() override
-    {
-        int argc = 1;
-        char* args[] = { (char*)"RengaPythonShell" };
-        QApplication app(argc, args);
-
-        ShellWindow window;
-        window.setMinimumSize(800, 600);
-
-        window.show();
-        app.exec();
-    }
-
-    void OnToggled(bool checked) override {}
-};
+#include "stdafx.h"
+#include "RengaPyShellPlugin.h"
+#include "RengaEventsHandler.h"
+#include "PluginToolButtons.h"
+#include "ShellWidget.h"
 
 RengaPyShellPlugin::RengaPyShellPlugin() {
     ::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
@@ -28,26 +12,9 @@ RengaPyShellPlugin::~RengaPyShellPlugin() {
     ::CoUninitialize();
 }
 
-void RengaPyShellPlugin::addHandler(Renga::ActionEventHandler* pHandler)
-{
-    m_handlerContainer.emplace_back(HandlerPtr(pHandler));
-}
-
-void RengaPyShellPlugin::EditAction(std::wstring pluginDir, Renga::IActionPtr action, std::wstring image_name, const char* tool_descr)
-{
-    auto renga_app = Renga::CreateApplication();
-    action->ToolTip = tool_descr;
-    Renga::IUIPtr renga_ui = renga_app->GetUI();
-    Renga::IImagePtr icon = renga_ui->CreateImage();
-    std::wstring plugin_dir(pluginDir);
-    icon->LoadFromFile((plugin_dir + image_name).c_str());
-    action->PutIcon(icon);
-}
-
 bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
 {
     auto rengaApplication = Renga::CreateApplication();
-
     if (!rengaApplication)
         return false;
 
@@ -55,30 +22,72 @@ bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
 //        QString cur_dir = QString::fromStdWString(pluginPath);
 //        QApplication::addLibraryPath(cur_dir);
 
-    Renga::IUIPtr renga_ui = rengaApplication->GetUI();
-    Renga::IUIPanelExtensionPtr panel = renga_ui->CreateUIPanelExtension();
+    rengaApp = rengaApplication;
+    rengaUi = rengaApplication->GetUI();
+    /*Renga::IUIPanelExtensionPtr panel = rengaUi->CreateUIPanelExtension();
 
-    Renga::IDropDownButtonPtr down_button = renga_ui->CreateDropDownButton();
-    Renga::IImagePtr icon = renga_ui->CreateImage();
-    std::wstring plugin_dir(pluginPath);
-    icon->LoadFromFile((plugin_dir + L":/icons/repa_logo.png").c_str());
-    down_button->PutIcon(icon);
-    down_button->ToolTip = "Запустить Renga Python Shell";
+    Renga::IImagePtr icon = rengaUi->CreateImage();
+    icon->LoadFromFile((std::wstring(pluginPath) + L"/icons/repa_logo.png").c_str());
+
+    Renga::IDropDownButtonPtr dropDownButton = rengaUi->CreateDropDownButton();
+    dropDownButton->PutToolTip("Запустить Renga Python Shell");
+    dropDownButton->PutIcon(icon);
 
     //Создаем кнопки для Py-логики
     //Исполнение из QT формы
-    Renga::IActionPtr button_py_execute = renga_ui->CreateAction();
-    EditAction(pluginPath, button_py_execute, L":/icons/py_logo.png", "Запустить основное окно");
-    button_py_execute->DisplayName = "Run Python shell";
-    this->addHandler(new PyForm(button_py_execute));
-    down_button->AddAction(button_py_execute);
+    Renga::IActionPtr buttonPyExecute = rengaUi->CreateAction();
+    EditAction(pluginPath, buttonPyExecute, L"/icons/py_logo.png", "Запустить основное окно");
+    buttonPyExecute->PutDisplayName(L"Run Python shell");
 
-    panel->AddDropDownButton(down_button);
-    renga_ui->AddExtensionToPrimaryPanel(panel);
+    dropDownButton->AddAction(buttonPyExecute);
+
+    auto openPyShellActionHandler = new RengaEventsHandler(buttonPyExecute);
+    this->addHandler(openPyShellActionHandler);
+
+    panel->AddDropDownButton(dropDownButton);
+    rengaUi->AddExtensionToPrimaryPanel(panel);*/
+
+    subscribeOnRengaEvents();
+    addPluginButtons(pluginPath);
 
     return true;
 }
 
 void RengaPyShellPlugin::stop() {
     this->m_handlerContainer.clear();
+}
+
+void RengaPyShellPlugin::subscribeOnRengaEvents() {
+    rengaEventsHandler.reset(new RengaEventsHandler(rengaApp));
+}
+
+void RengaPyShellPlugin::addPluginButtons(const std::wstring &pluginPath) {
+    pluginToolButtons.reset(new PluginToolButtons(rengaUi, pluginPath));
+    connect(pluginToolButtons.get(), SIGNAL(rengaPyShellButtonClicked()), this, SLOT(onRengaPyShellButtonClicked()));
+}
+
+void RengaPyShellPlugin::onRengaPyShellButtonClicked()
+{
+    //        int argc = 1;
+//        char* argv[] = { (char*)"RengaPythonShell" };
+//        QApplication app(argc, argv);
+
+//    ShellWidget window;
+//    window.setMinimumSize(800, 600);
+//
+//    window.show();
+//    window.activateWindow();
+//        app.exec();
+
+    if (shellWidget)
+        shellWidget->close();
+
+    shellWidget.reset(new ShellWidget(rengaApp));
+    shellWidget->show();
+    shellWidget->activateWindow();
+}
+
+void RengaPyShellPlugin::addHandler(Renga::ActionEventHandler* pHandler)
+{
+    m_handlerContainer.emplace_back(HandlerPtr(pHandler));
 }

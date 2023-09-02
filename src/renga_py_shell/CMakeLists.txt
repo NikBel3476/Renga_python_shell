@@ -34,12 +34,17 @@ if (NOT ${Python_INTERPRETER_ID} MATCHES "Python")
 endif()
 
 set(PROJECT_SOURCES
+    main.cpp
+    stdafx.cpp
     RengaPyShellPlugin.cpp
-    shellwindow.cpp
+    RengaEventsHandler.cpp
+    PluginToolButtons.cpp
+    RengaPyShellButtonHandler.cpp
+    ShellWidget.cpp
     PythonCodeEditor.cpp
     python_code_handler.cpp
     qt_resources_data.qrc
-    shellwindow.ui
+    ShellWidget.ui
 )
 
 if (NOT DEFINED CMAKE_BUILD_TYPE)
@@ -58,15 +63,15 @@ endif()
 #endforeach()
 
 if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
-    configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/renga_py_shell.rndesc)
-    configure_file(icons/py_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/py_logo.png)
-    configure_file(icons/repa_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/repa_logo.png)
-    configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/ui_form_run_script.png)
+    configure_file(renga_py_shell.rndesc ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/renga_py_shell.rndesc COPYONLY)
+    configure_file(icons/py_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/py_logo.png COPYONLY)
+    configure_file(icons/repa_logo.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/repa_logo.png COPYONLY)
+    configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/ui_form_run_script.png COPYONLY)
 else()
-    configure_file(renga_py_shell.rndesc renga_py_shell.rndesc)
-    configure_file(icons/py_logo.png py_logo.png)
-    configure_file(icons/repa_logo.png repa_logo.png)
-    configure_file(icons/ui_form_run_script.png ui_form_run_script.png)
+    configure_file(renga_py_shell.rndesc renga_py_shell.rndesc COPYONLY)
+    configure_file(icons/py_logo.png py_logo.png COPYONLY)
+    configure_file(icons/repa_logo.png repa_logo.png COPYONLY)
+    configure_file(icons/ui_form_run_script.png ui_form_run_script.png COPYONLY)
 endif()
 
 add_library(${PROJECT_NAME} SHARED

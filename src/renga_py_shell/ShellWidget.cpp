@@ -1,55 +1,58 @@
-#include "shellwindow.h"
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QStyle>
-#include "ui_shellwindow.h"
+
+#include "ShellWidget.h"
+#include "ui_shellwidget.h"
 #include "python_code_handler.hpp"
 
 
-ShellWindow::ShellWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::ShellWindow)
+ShellWidget::ShellWidget(Renga::IApplicationPtr rengaApplication) :
+    QWidget(nullptr, Qt::Tool),
+    rengaApp(rengaApplication)
+//    ui(new Ui::ShellWidget)
 {
+    ui.reset(new Ui::ShellWidget());
     ui->setupUi(this);
-    this->py_editor = new PythonCodeEditor(this);
-    //QRect* reqt = new QRect(10, 40, 861, 341);
-    py_editor->setGeometry(10, 60, 861, 340);
 
-    // FIXME: remove hardcoded path
-    QFile inputFile("E:\\Temp\\test_1.py");
-    this->py_editor->insertPlainText("");
-    if (inputFile.open(QIODevice::ReadOnly))
-    {
-        QTextStream in(&inputFile);
-        while (!in.atEnd())
-        {
-            QString line = in.readLine();
-            this->py_editor->appendPlainText(line);
-        }
-        inputFile.close();
-    }
-
-
+//    this->py_editor = new PythonCodeEditor(this);
+//    //QRect* reqt = new QRect(10, 40, 861, 341);
+//    py_editor->setGeometry(10, 60, 861, 340);
+//
+//    // FIXME: remove hardcoded path
+//    QFile inputFile("E:\\Temp\\test_1.py");
+//    this->py_editor->insertPlainText("");
+//    if (inputFile.open(QIODevice::ReadOnly))
+//    {
+//        QTextStream in(&inputFile);
+//        while (!in.atEnd())
+//        {
+//            QString line = in.readLine();
+//            this->py_editor->appendPlainText(line);
+//        }
+//        inputFile.close();
+//    }
 }
 
-ShellWindow::~ShellWindow()
+ShellWidget::~ShellWidget()
 {
-    delete ui;
+
 }
 
 
-void ShellWindow::on_action_load_from_file_clicked()
+void ShellWidget::on_action_load_from_file_clicked()
 {
  //load script from file
 }
 
 
-void ShellWindow::on_output_space_textChanged()
+void ShellWidget::on_output_space_textChanged()
 {
     //save to local file
 }
 
 
-void ShellWindow::on_code_space_textChanged()
+void ShellWidget::on_code_space_textChanged()
 {
     //save result to temp file
     //https://evileg.com/en/post/437/
@@ -58,55 +61,55 @@ void ShellWindow::on_code_space_textChanged()
 }
 
 
-void ShellWindow::on_pushButton_clicked()
+void ShellWidget::on_pushButton_clicked()
 {
     //save to file
 }
 
 
-void ShellWindow::on_command_run_script_clicked()
+void ShellWidget::on_command_run_script_clicked()
 {
     //execute scipt in code_space
     QString code_as_text = this->py_editor->toPlainText();
     python_run_code(&code_as_text, this->ui->output_space);
 }
 
-void ShellWindow::on_action_3_triggered()
+void ShellWidget::on_action_3_triggered()
 {
     //перемещение в репозиторий с программой
     QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell", QUrl::TolerantMode));
 }
 
 
-void ShellWindow::on_action_5_triggered()
+void ShellWidget::on_action_5_triggered()
 {
     //= запуск кода
-    this->ShellWindow::on_command_run_script_clicked();
+    this->ShellWidget::on_command_run_script_clicked();
 }
 
 
-void ShellWindow::on_action_4_triggered()
+void ShellWidget::on_action_4_triggered()
 {
     //перемещение в ReadMe
     QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell/blob/main/README.md", QUrl::TolerantMode));
 }
 
 
-void ShellWindow::on_action_6_triggered()
+void ShellWidget::on_action_6_triggered()
 {
     //перемещение в Issues
     QDesktopServices::openUrl(QUrl("https://github.com/GeorgGrebenyuk/Renga_python_shell/issues", QUrl::TolerantMode));
 }
 
 
-void ShellWindow::on_action_triggered()
+void ShellWidget::on_action_triggered()
 {
     //close form
     this->close();
 }
 
 
-void ShellWindow::on_action_Python_triggered()
+void ShellWidget::on_action_Python_triggered()
 {
     //open py script and loading them in code_space
     QString file1Name = QFileDialog::getOpenFileName(this,
@@ -126,7 +129,7 @@ void ShellWindow::on_action_Python_triggered()
 }
 
 
-void ShellWindow::on_action_Python_2_triggered()
+void ShellWidget::on_action_Python_2_triggered()
 {
     //save inner of code_space to file
     QString code_string = this->py_editor->toPlainText();
@@ -142,7 +145,7 @@ void ShellWindow::on_action_Python_2_triggered()
 }
 
 
-void ShellWindow::on_command_run_script_triggered(QAction *arg1)
+void ShellWidget::on_command_run_script_triggered(QAction *arg1)
 {
     this->on_command_run_script_clicked();
 }

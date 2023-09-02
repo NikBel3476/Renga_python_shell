@@ -1,20 +1,23 @@
 #ifndef SHELLWINDOW_H
 #define SHELLWINDOW_H
 
-#include <QMainWindow>
+#include "stdafx.h"
+
 #include "PythonCodeEditor.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ShellWindow; }
+namespace Ui {
+    class ShellWidget;
+}
 QT_END_NAMESPACE
 
-class ShellWindow : public QMainWindow
+class ShellWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ShellWindow(QWidget *parent = nullptr);
-    ~ShellWindow();
+    ShellWidget(Renga::IApplicationPtr rengaApp);
+    ~ShellWidget();
 
 private slots:
     void on_action_load_from_file_clicked();
@@ -44,8 +47,10 @@ private slots:
     void on_command_run_script_triggered(QAction *arg1);
 
 private:
-    Ui::ShellWindow *ui;
+//    Ui::ShellWidget *ui;
     PythonCodeEditor* py_editor;
     // Inherited class for creating syntax highlighting logic
+    Renga::IApplicationPtr rengaApp;
+    std::unique_ptr<Ui::ShellWidget> ui;
 };
 #endif // SHELLWINDOW_H
