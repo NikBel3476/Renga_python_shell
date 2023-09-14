@@ -69,9 +69,9 @@ if (${CMAKE_GENERATOR} MATCHES "Visual Studio")
     configure_file(icons/ui_form_run_script.png ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/icons/ui_form_run_script.png COPYONLY)
 else()
     configure_file(renga_py_shell.rndesc renga_py_shell.rndesc COPYONLY)
-    configure_file(icons/py_logo.png py_logo.png COPYONLY)
-    configure_file(icons/repa_logo.png repa_logo.png COPYONLY)
-    configure_file(icons/ui_form_run_script.png ui_form_run_script.png COPYONLY)
+    configure_file(icons/py_logo.png icons/py_logo.png COPYONLY)
+    configure_file(icons/repa_logo.png icons/repa_logo.png COPYONLY)
+    configure_file(icons/ui_form_run_script.png icons/ui_form_run_script.png COPYONLY)
 endif()
 
 add_library(${PROJECT_NAME} SHARED
