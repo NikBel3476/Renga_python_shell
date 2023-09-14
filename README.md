@@ -16,5 +16,5 @@ Repa (РЕнга ПАйтон) -- плагин в Renga для исполнен�
 
 Сборка проекта (CMake)
 
-1. cmake -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=<path to qt6> -DRENGA_SDK_PATH=<path to renga SDK> -B <build directory>
-2. cmake --build <build directory> --target renga_py_shell
+1. cmake -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=\<path to qt6> -DRENGA_SDK_PATH=\<path to renga SDK> -B \<build directory>
+2. cmake --build \<build directory> --target renga_py_shell
