@@ -14,16 +14,16 @@ RengaPyShellPlugin::~RengaPyShellPlugin() {
 
 bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
 {
-    auto rengaApplication = Renga::CreateApplication();
-    if (!rengaApplication)
+    QCoreApplication::addLibraryPath("./Plugins/renga_py_shell/plugins");
+    auto rengaApp = Renga::CreateApplication();
+    if (!rengaApp)
         return false;
 
         //Загрузка библиотеки QT6 для плагина
 //        QString cur_dir = QString::fromStdWString(pluginPath);
 //        QApplication::addLibraryPath(cur_dir);
 
-    rengaApp = rengaApplication;
-    rengaUi = rengaApplication->GetUI();
+    rengaUi = rengaApp->GetUI();
     /*Renga::IUIPanelExtensionPtr panel = rengaUi->CreateUIPanelExtension();
 
     Renga::IImagePtr icon = rengaUi->CreateImage();
@@ -47,7 +47,7 @@ bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
     panel->AddDropDownButton(dropDownButton);
     rengaUi->AddExtensionToPrimaryPanel(panel);*/
 
-    subscribeOnRengaEvents();
+//    subscribeOnRengaEvents();
     addPluginButtons(pluginPath);
 
     return true;
@@ -68,23 +68,22 @@ void RengaPyShellPlugin::addPluginButtons(const std::wstring &pluginPath) {
 
 void RengaPyShellPlugin::onRengaPyShellButtonClicked()
 {
-    //        int argc = 1;
-//        char* argv[] = { (char*)"RengaPythonShell" };
-//        QApplication app(argc, argv);
-
-//    ShellWidget window;
-//    window.setMinimumSize(800, 600);
-//
-//    window.show();
-//    window.activateWindow();
-//        app.exec();
+    int argc = 1;
+    char* argv[] = { (char*)"RengaPythonShell" };
+    QApplication app(argc, argv);
+//    ShellWidget widget;
+//    widget.setMinimumSize(800, 600);
+//    widget.show();
+////    window.activateWindow();
+//    app.exec();
 
     if (shellWidget)
         shellWidget->close();
 
     shellWidget.reset(new ShellWidget(rengaApp));
     shellWidget->show();
-    shellWidget->activateWindow();
+//    shellWidget->activateWindow();
+    app.exec();
 }
 
 void RengaPyShellPlugin::addHandler(Renga::ActionEventHandler* pHandler)
