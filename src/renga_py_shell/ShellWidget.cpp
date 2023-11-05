@@ -1,6 +1,9 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QStyle>
+#include <QProcess>
+#include <QDebug>
+#include <iostream>
 
 #include "ShellWidget.h"
 #include "ui_shellwidget.h"
@@ -15,11 +18,19 @@ ShellWidget::ShellWidget(Renga::IApplicationPtr rengaApplication) :
     ui.reset(new Ui::ShellWidget());
     ui->setupUi(this);
 
-//    this->py_editor = new PythonCodeEditor(this);
-//    //QRect* reqt = new QRect(10, 40, 861, 341);
-//    py_editor->setGeometry(10, 60, 861, 340);
-//
-//    // FIXME: remove hardcoded path
+    this->py_editor = new PythonCodeEditor(this);
+    //QRect* reqt = new QRect(10, 40, 861, 341);
+    py_editor->setGeometry(10, 45, 861, 340);
+
+//    proc = new QProcess(this);
+//    proc->setProcessChannelMode(QProcess::MergedChannels);
+//    proc->start("renga_prog");
+//    connect(proc, SIGNAL(readyReadStandardOutput()), SLOT(readStdOut()));
+
+    std::cout << "init" << std::endl;
+    qDebug("debug");
+
+    // FIXME: remove hardcoded path
 //    QFile inputFile("E:\\Temp\\test_1.py");
 //    this->py_editor->insertPlainText("");
 //    if (inputFile.open(QIODevice::ReadOnly))
@@ -36,9 +47,22 @@ ShellWidget::ShellWidget(Renga::IApplicationPtr rengaApplication) :
 
 ShellWidget::~ShellWidget()
 {
-
+    proc->close();
 }
 
+void ShellWidget::readStdOut() {
+//    proc = new QProcess(this);
+//    proc->start("prog");
+    this->ui->output_space->insertPlainText(QString("readStdOut\n"));
+    QByteArray sout = proc->readAllStandardOutput();
+    this->ui->output_space->insertPlainText(QString(sout));
+}
+
+void ShellWidget::insertPlainTextToOutput(QString *text) {
+    this->ui->output_space->insertPlainText(QString("readStdOut\n"));
+//    QByteArray sout = proc->readAllStandardOutput();
+    this->ui->output_space->insertPlainText(*text);
+}
 
 void ShellWidget::on_action_load_from_file_clicked()
 {
@@ -70,6 +94,8 @@ void ShellWidget::on_pushButton_clicked()
 void ShellWidget::on_command_run_script_clicked()
 {
     //execute scipt in code_space
+    std::cout << "hello" << std::endl;
+//    this->ui->output_space->insertPlainText(QString("allo"));
     QString code_as_text = this->py_editor->toPlainText();
     python_run_code(&code_as_text, this->ui->output_space);
 }

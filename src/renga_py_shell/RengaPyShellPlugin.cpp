@@ -1,3 +1,7 @@
+#include <QProcess>
+#include <QDebug>
+#include <iostream>
+
 #include "stdafx.h"
 #include "RengaPyShellPlugin.h"
 #include "RengaEventsHandler.h"
@@ -14,8 +18,20 @@ RengaPyShellPlugin::~RengaPyShellPlugin() {
 
 bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
 {
+//    QStringList libraryPaths = { "./Plugins/renga_py_shell/plugins" };
+//    QCoreApplication::setLibraryPaths(libraryPaths);
     QCoreApplication::addLibraryPath("./Plugins/renga_py_shell/plugins");
-    auto rengaApp = Renga::CreateApplication();
+
+    int argc = 1;
+    char* argv[] = { (char*)"RengaPythonShell" };
+    QApplication app(argc, argv);
+
+    proc = new QProcess(this);
+    proc->setProcessChannelMode(QProcess::MergedChannels);
+    proc->start("RengaPythonShell");
+    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT(readStdOut()));
+
+    rengaApp = Renga::CreateApplication();
     if (!rengaApp)
         return false;
 
@@ -47,8 +63,10 @@ bool RengaPyShellPlugin::initialize(const wchar_t* pluginPath)
     panel->AddDropDownButton(dropDownButton);
     rengaUi->AddExtensionToPrimaryPanel(panel);*/
 
-//    subscribeOnRengaEvents();
+    subscribeOnRengaEvents();
     addPluginButtons(pluginPath);
+
+    app.exec();
 
     return true;
 }
@@ -57,8 +75,16 @@ void RengaPyShellPlugin::stop() {
     this->m_handlerContainer.clear();
 }
 
+void RengaPyShellPlugin::onProjectAboutToClose() {
+    if (shellWidget) {
+        shellWidget->close();
+        shellWidget.reset();
+    }
+}
+
 void RengaPyShellPlugin::subscribeOnRengaEvents() {
     rengaEventsHandler.reset(new RengaEventsHandler(rengaApp));
+    connect(rengaEventsHandler.get(), SIGNAL(projectAboutToClose()), this, SLOT(onProjectAboutToClose));
 }
 
 void RengaPyShellPlugin::addPluginButtons(const std::wstring &pluginPath) {
@@ -68,9 +94,6 @@ void RengaPyShellPlugin::addPluginButtons(const std::wstring &pluginPath) {
 
 void RengaPyShellPlugin::onRengaPyShellButtonClicked()
 {
-    int argc = 1;
-    char* argv[] = { (char*)"RengaPythonShell" };
-    QApplication app(argc, argv);
 //    ShellWidget widget;
 //    widget.setMinimumSize(800, 600);
 //    widget.show();
@@ -83,7 +106,23 @@ void RengaPyShellPlugin::onRengaPyShellButtonClicked()
     shellWidget.reset(new ShellWidget(rengaApp));
     shellWidget->show();
 //    shellWidget->activateWindow();
-    app.exec();
+
+//    app.exec();
+}
+
+void RengaPyShellPlugin::readStdOut() {
+//    proc = new QProcess(this);
+//    proc->setProcessChannelMode(QProcess::MergedChannels);
+//    proc->start("renga_prog");
+//    shellWidget->ui->output_space->insertPlainText(QString("readStdOut\n"));
+    std::cout << "cout" << std::endl;
+    qDebug("debug");
+    QByteArray sout = proc->readAllStandardOutput();
+    std::cout << "cout" << std::endl;
+    qDebug("debug");
+//    this->ui->output_space->insertPlainText(QString(sout));
+    QString *string_out = new QString(sout);
+    shellWidget->insertPlainTextToOutput(string_out);
 }
 
 void RengaPyShellPlugin::addHandler(Renga::ActionEventHandler* pHandler)

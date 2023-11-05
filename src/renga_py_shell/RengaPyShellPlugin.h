@@ -5,6 +5,7 @@
 #include <list>
 #include <QString>
 #include <QObject>
+#include <QProcess>
 
 #include <Renga/ActionEventHandler.hpp>
 #include <Renga/IPlugin.h>
@@ -15,7 +16,7 @@ class PluginToolButtons;
 
 class RengaPyShellPlugin : public QObject, public plugins::IPlugin
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     RengaPyShellPlugin();
@@ -26,6 +27,8 @@ public:
 
 private slots:
     void onRengaPyShellButtonClicked();
+    void onProjectAboutToClose();
+    void readStdOut();
 
 private:
     void addHandler(Renga::ActionEventHandler* pHandler);
@@ -42,6 +45,7 @@ private:
     std::unique_ptr<RengaEventsHandler> rengaEventsHandler;
     std::unique_ptr<PluginToolButtons> pluginToolButtons;
     std::unique_ptr<ShellWidget> shellWidget;
+    QProcess *proc;
 };
 //EXPORT_PLUGIN(RengaPyShellPlugin);
 #endif // RENGA_LOADER_HPP

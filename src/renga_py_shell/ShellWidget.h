@@ -18,6 +18,7 @@ class ShellWidget : public QWidget
 public:
     ShellWidget(Renga::IApplicationPtr rengaApp);
     ~ShellWidget();
+    void insertPlainTextToOutput(QString *text);
 
 private slots:
     void on_action_load_from_file_clicked();
@@ -46,11 +47,14 @@ private slots:
 
     void on_command_run_script_triggered(QAction *arg1);
 
+    void readStdOut();
+
 private:
 //    Ui::ShellWidget *ui;
     PythonCodeEditor* py_editor;
     // Inherited class for creating syntax highlighting logic
     Renga::IApplicationPtr rengaApp;
     std::unique_ptr<Ui::ShellWidget> ui;
+    QProcess *proc;
 };
 #endif // SHELLWINDOW_H

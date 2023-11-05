@@ -11,7 +11,7 @@
 
 class PythonCodeEditor: public QPlainTextEdit
 {
-     Q_OBJECT
+Q_OBJECT
 
 public:
     explicit PythonCodeEditor(QWidget *parent = nullptr);
@@ -33,7 +33,7 @@ private:
 
 class LineNumberArea : public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     LineNumberArea(PythonCodeEditor *editor) : QWidget(editor) {

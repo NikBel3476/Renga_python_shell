@@ -17,7 +17,15 @@
    <iconset resource="qt_resources_data.qrc">
     <normaloff>:/icons/repa_logo.png</normaloff>:/icons/repa_logo.png</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>881</width>
+     <height>539</height>
+    </rect>
+   </property>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
@@ -44,8 +52,8 @@
    <widget class="QToolButton" name="command_run_script">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>8</y>
+      <x>850</x>
+      <y>20</y>
       <width>23</width>
       <height>23</height>
      </rect>
@@ -61,9 +69,9 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>10</y>
-      <width>91</width>
+      <x>770</x>
+      <y>20</y>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
@@ -77,8 +85,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>10</x>
+      <y>20</y>
       <width>151</width>
       <height>16</height>
      </rect>
@@ -125,7 +133,16 @@
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>3</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
   <action name="action_Python">
    <property name="text">
     <string>Открыть Python скрипт</string>

@@ -23,7 +23,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
     Widgets
 )
-find_package (Python COMPONENTS Interpreter Development)
+find_package (Python REQUIRED COMPONENTS Interpreter Development)
 
 if (NOT DEFINED Python_EXECUTABLE)
     message(SEND_ERROR "Python not found")
@@ -79,9 +79,9 @@ add_library(${PROJECT_NAME} SHARED
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
 #    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt::Core
-    Qt::Gui
-    Qt::Widgets
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Widgets
     Python::Module
 )
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
